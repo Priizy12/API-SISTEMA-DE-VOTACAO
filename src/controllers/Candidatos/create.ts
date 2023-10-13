@@ -48,6 +48,7 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 			candidato,
 		});
 	} catch (error) {
+		console.log(error)
 		return res.status(StatusCodes.UNAUTHORIZED).json({
 			default: {
 				error: {
