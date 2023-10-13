@@ -4,9 +4,10 @@ import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation";
 import { ICandidato } from "../../database/models/candidatos";
+import path from 'path'
 const prisma = new PrismaClient();
 
-interface IBodyProps extends Omit<ICandidato, "idCandidato" | 'foto'> {}
+interface IBodyProps extends Omit<ICandidato, "idCandidato" > {}
 
 export const candidatoUpValidation = validation((getSchema) => ({
 	body: getSchema<IBodyProps>(
@@ -19,21 +20,32 @@ export const candidatoUpValidation = validation((getSchema) => ({
 }));
 
 export const create = async (req: Request<{}, {}, ICandidato>, res: Response) => {
-	const { name, municipio, apelido, foto } = req.body;
-
+	const { name, municipio, apelido } = req.body;
+	const requestImages = req.files as Express.Multer.File[];
 	try {
-		const user = await prisma.candidato.create({
+
+		
+			const images = requestImages.map((image) =>{
+				return {
+					Url: image.filename
+				}
+			});
+
+
+		const candidato = await prisma.candidato.create({
 			data: {
 				name,
 				municipio,
                 apelido,
-                foto
-			},
+				images:{
+					create: images
+				}
+			}
 		});
-
+	
 		return res.status(StatusCodes.OK).json({
 			msg: "Candidato Registrado com sucesso",
-			user,
+			candidato,
 		});
 	} catch (error) {
 		return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -45,3 +57,5 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 		});
 	}
 };
+
+

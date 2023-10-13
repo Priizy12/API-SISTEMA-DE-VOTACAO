@@ -41,5 +41,15 @@ model Candidato {
    name    String @db.VarChar(60)
    municipio String @db.VarChar(60)
    apelido String? @db.VarChar(60)
-   foto String @unique
+   images Images[]
 }
+
+
+model Images {
+  id Int  @id @default(autoincrement())
+  Url String 
+  perfil Candidato @relation(fields: [FotoId], references: [idCandidato])
+  FotoId Int
+}
+
+

@@ -6,5 +6,4 @@ export interface ICandidato {
     name: string;
     municipio: string;
     apelido?: string;
-    foto: string;
 }
