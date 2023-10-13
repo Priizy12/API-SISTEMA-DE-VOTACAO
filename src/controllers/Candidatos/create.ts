@@ -4,7 +4,6 @@ import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation";
 import { ICandidato } from "../../database/models/candidatos";
-import path from 'path'
 const prisma = new PrismaClient();
 
 interface IBodyProps extends Omit<ICandidato, "idCandidato" > {}

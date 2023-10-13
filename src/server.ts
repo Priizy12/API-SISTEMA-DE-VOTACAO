@@ -13,7 +13,7 @@ app.use((req, res, next) => {
     app.use(cors());
     next();
 });
-app.use("/images", express.static(path.join(__dirname, "..", "uploads")))
+app.use("/images", express.static(path.join(__dirname, "..", "..", "uploads")))
 app.use(router)
 
 app.listen(3000, () => {
