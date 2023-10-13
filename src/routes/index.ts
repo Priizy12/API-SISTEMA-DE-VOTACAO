@@ -7,7 +7,7 @@ import { CandidatoController } from '../controllers/Candidatos';
 import { multerConfig } from '../shared/config/multer';
 import multer from 'multer';
 
-const upload = multer(multerConfig);
+
 const router = Router();
 
 //Cadastro e Login
@@ -18,7 +18,7 @@ router.post('/Login', signInValidation, UsuariosController.signIn)
 
 
 //Cadastro de Candidatos
-router.post("/Candidato" , upload.array("images"),  CandidatoController.create )
+router.post("/Candidato" , multer(multerConfig).single('images'),  CandidatoController.create )
 
 
 //Cadastro de Perguntas --> (Administrador)
