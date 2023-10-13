@@ -38,7 +38,7 @@ model Perguntas {
 
 model Candidato {
    idCandidato Int @id @default(autoincrement())
-   name    String @db.VarChar(60) @unique 
+   name    String @db.VarChar(60) 
    municipio String @db.VarChar(60) 
    apelido String? @db.VarChar(60) 
    images Images[] 
