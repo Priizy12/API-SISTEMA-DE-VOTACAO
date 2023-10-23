@@ -3,14 +3,14 @@ import { RequestHandler, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken'
-import { IUsuario } from "../../database/models";
+import { IPesquisador } from "../../database/models";
 import { validation } from '../../shared/middlewares/Validation';
 import * as yup from 'yup'
 const prisma = new PrismaClient()
 
 
 
-interface IBodyProps extends Omit<IUsuario, 'id' | 'name' |  'roleId' | 'cpf'> {  }
+interface IBodyProps extends Omit<IPesquisador, 'id_pesquisador' | 'name' |  'roleId' | 'cpf'> {  }
 
 
 
@@ -23,11 +23,21 @@ export const signInValidation = validation((getSchema) => ({
 
 
 
-export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>{
+export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) =>{
     const {email, senha} = req.body
   
   try {
-    const user: { id: number; email: string; name: string; senha: string } | null   = await prisma.user.findFirst({ where: { email } });
+    const user: {
+        id_Pesquisador: number;
+        email: string;
+        name: string;
+        cpf: string;
+        senha: string;
+        createdAt: Date;
+        updatedAt: Date;
+        roleId: number;
+    } | null = await prisma.pesquisadores.findFirst({ where: { email } });
+
 
     if(!user) return res.status(StatusCodes.UNAUTHORIZED).json({
         default:{
@@ -47,7 +57,7 @@ export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>
         }
     });
     
-   const token =  jwt.sign({id: user.id}, 'wNx3UP8NQiX3hQv2dBDnaf3rj4rgA71hR' , {
+   const token =  jwt.sign({id: user.id_Pesquisador}, 'wNx3UP8NQiX3hQv2dBDnaf3rj4rgA71hR' , {
         expiresIn: "24h"
     } )
 

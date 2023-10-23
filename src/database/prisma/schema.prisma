@@ -9,9 +9,9 @@ datasource db {
 }
 
 
-model User {
+model Pesquisadores {
 
-  id        Int      @id @default(autoincrement())
+  id_Pesquisador        Int      @id @default(autoincrement())
   email   String   @unique
   name    String @db.VarChar(60)
   cpf String @unique @db.VarChar(14)
@@ -21,6 +21,7 @@ model User {
   Roles Role @relation(fields: [roleId], references: [id])
   roleId Int  
  
+  municipio municipio[] @relation("pesquisador")
 }
 
 model Role {
@@ -28,34 +29,41 @@ model Role {
   Role      String
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  role User[]
+  role Pesquisadores[]
 }
 
-
-model Perguntas {
-  idPergunta Int @id @default(autoincrement())
-  Pergunta String @db.VarChar(190)
-}
-
-model Respostas {
-  idResposta Int @id @default(autoincrement())
-  Resposta String @db.VarChar(190)
-}
 
 model Candidato {
-   idCandidato Int @id @default(autoincrement())
+   id_candidato Int @id @default(autoincrement())
    name    String @db.VarChar(60) 
-   municipio String @db.VarChar(60) 
    apelido String? @db.VarChar(60) 
    images Images[] 
+
+
+    muni municipio[] @relation("candidato")
 }
+
+model municipio {
+  idMunicipio Int  @id @default(autoincrement())
+  Municipio String
+  id_pesquisador Int
+  pesquisador Pesquisadores @relation( "pesquisador",fields: [id_pesquisador], references: [id_Pesquisador])
+  id_Candidato Int
+  candidato Candidato @relation( "candidato",fields: [id_Candidato], references: [id_candidato])
+
+  
+
+}
+
 
 
 model Images {
   id Int  @id @default(autoincrement())
   Url String 
-  perfil Candidato @relation(fields: [FotoId], references: [idCandidato])
+  perfil Candidato @relation(fields: [FotoId], references: [id_candidato])
   FotoId Int
 }
+
+
 
 

@@ -3,11 +3,11 @@ import { RequestHandler, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as bcrypt from "bcryptjs";
 import * as yup from "yup";
-import { IUsuario } from "../../database/models";
+import { IPesquisador  } from "../../database/models";
 import { validation } from "../../shared/middlewares/Validation";
 const prisma = new PrismaClient();
 
-interface IBodyProps extends Omit<IUsuario, "id" | "roleId"> {}
+interface IBodyProps extends Omit<IPesquisador, "id_pesquisador" | "roleId"> {}
 
 export const signUpValidation = validation((getSchema) => ({
 	body: getSchema<IBodyProps>(
@@ -20,10 +20,10 @@ export const signUpValidation = validation((getSchema) => ({
 	),
 }));
 
-export const signUp = async (req: Request<{}, {}, IUsuario>, res: Response) => {
+export const signUp = async (req: Request<{}, {}, IPesquisador>, res: Response) => {
 	const { name, email, senha, cpf, roleId } = req.body;
 
-	const userExist = await prisma.user.findUnique({ where: { email } });
+	const userExist = await prisma.pesquisadores.findUnique({ where: { email } });
 	if (userExist)
 		return res.status(StatusCodes.UNAUTHORIZED).json({
 			msg: "Email já registrado!",
@@ -32,7 +32,7 @@ export const signUp = async (req: Request<{}, {}, IUsuario>, res: Response) => {
 	try {
 		const hashPassword = await bcrypt.hash(senha, 10);
 		const userRole = roleId || 1;
-		const user = await prisma.user.create({
+		const user = await prisma.pesquisadores.create({
 			data: {
 				name,
 				email,

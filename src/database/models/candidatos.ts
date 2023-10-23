@@ -2,8 +2,7 @@
 
 
 export interface ICandidato {
-    idCandidato: number;
+    id_candidato: number;
     name: string;
-    municipio: string;
     apelido?: string;
 }

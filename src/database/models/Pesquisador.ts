@@ -1,5 +1,5 @@
-export interface IUsuario {
-    id: number;
+export interface IPesquisador{
+    id_pesquisador: number;
     name: string;
     email: string;
     cpf: string;
