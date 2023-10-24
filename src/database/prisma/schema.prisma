@@ -55,8 +55,6 @@ model municipio {
 
 }
 
-
-
 model Images {
   id Int  @id @default(autoincrement())
   Url String 

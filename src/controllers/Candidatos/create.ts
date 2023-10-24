@@ -11,7 +11,7 @@ interface IBodyProps extends Omit<ICandidato, "id_candidato" > {}
 export const candidatoUpValidation = validation((getSchema) => ({
 	body: getSchema<IBodyProps>(
 		yup.object().shape({
-			name: yup.string().required().min(3),
+			name: yup.string().required().min(5),
             apelido: yup.string().optional().max(60),
 		})
 	),

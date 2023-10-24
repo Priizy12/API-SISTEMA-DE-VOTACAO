@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 import { validation } from '../../shared/middlewares/Validation'
 import * as yup from 'yup'
-
 import { ICandidato } from "../../database/models/candidatos";
 const prisma = new PrismaClient();
 
@@ -15,7 +14,7 @@ interface IParamProps {
 interface IBodyProps extends Omit<ICandidato, 'id_candidato'> {}
 
 
-export const viewEvent = validation((getSchema) => ({
+export const candidatoValidation = validation((getSchema) => ({
     body: getSchema<IBodyProps>(yup.object().shape({
         name: yup.string().required().max(60),
         apelido: yup.string().optional()
@@ -25,10 +24,10 @@ export const viewEvent = validation((getSchema) => ({
     })),
 }));
 
-export const uptdate = async (req: Request<IParamProps, {}, IBodyProps>, res: Response) => {
+export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) => {
 
-    const { id_candidato} = req.params
-    const { name, apelido} = req.body;
+    const { id_candidato } = req.params as IParamProps
+    const { name, apelido } = req.body;
     const requestImages = req.files as Express.Multer.File[];
     try {
 
