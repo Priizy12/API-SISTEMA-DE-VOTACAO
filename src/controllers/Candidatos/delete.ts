@@ -16,7 +16,7 @@ export const deleteById = async (req: Request<IParamProps, {}, {}>, res: Respons
 
     try {
         if(!req.params) return res.status(StatusCodes.BAD_REQUEST).json()
-       const viewEvent = await prisma.candidato.delete({
+       const candidato = await prisma.candidato.delete({
         where:{
             id_candidato: Number(id_candidato)
         },

@@ -20,7 +20,8 @@ model Pesquisadores {
   updatedAt  DateTime   @updatedAt
   Roles Role @relation(fields: [roleId], references: [id])
   roleId Int  
- 
+  
+  estado Estado[] @relation("pesquisador")
   municipio municipio[] @relation("pesquisador")
 }
 
@@ -39,8 +40,9 @@ model Candidato {
    apelido String? @db.VarChar(60) 
    images Images[] 
 
-
+    uf Estado[] @relation("candidato")
     muni municipio[] @relation("candidato")
+    votos Votos[]
 }
 
 model municipio {
@@ -51,9 +53,20 @@ model municipio {
   id_Candidato Int
   candidato Candidato @relation( "candidato",fields: [id_Candidato], references: [id_candidato])
 
-  
+}
+
+model Estado {
+  id_Estado Int @id @default(autoincrement())
+  Estado String 
+  uf String @db.VarChar(2)
+  id_pesquisador Int
+  pesquisador Pesquisadores @relation( "pesquisador",fields: [id_pesquisador], references: [id_Pesquisador])
+  id_Candidato Int
+  candidato Candidato @relation( "candidato",fields: [id_Candidato], references: [id_candidato])
+
 
 }
+
 
 model Images {
   id Int  @id @default(autoincrement())
@@ -63,5 +76,12 @@ model Images {
 }
 
 
-
+model Votos {
+  id_voto Int @id @default(autoincrement())
+  sim Boolean?
+  nao Boolean?
+  nulo Boolean?
+  id_voto_candidato Int
+  candidato Candidato @relation(fields: [id_voto_candidato], references: [id_candidato])
+}
 

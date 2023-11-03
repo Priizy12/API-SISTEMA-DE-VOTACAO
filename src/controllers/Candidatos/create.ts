@@ -19,14 +19,14 @@ export const candidatoUpValidation = validation((getSchema) => ({
 
 export const create = async (req: Request<{}, {}, ICandidato>, res: Response) => {
 	const { name, apelido } = req.body;
-	const requestImages = req.files as Express.Multer.File[];
+	//const requestImages = req.files as Express.Multer.File[];
 	try {
 
-			const images = requestImages.map((image) =>{
-				return {
-					Url: image.filename
-				}
-			});
+			//const images = requestImages.map((image) =>{
+			//	return {
+			//		Url: image.filename
+			//	}
+		//	});
 
 
 		const candidato = await prisma.candidato.create({
@@ -34,7 +34,7 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 				name,
                 apelido,
 				images:{
-					create: images
+				//	create: images
 				}
 			}
 		});
