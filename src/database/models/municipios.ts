@@ -1,3 +1,4 @@
-export interface IPesquisador{
+export interface Municipio{
+   idMunicipio: string;
    Municipio: string;
 }

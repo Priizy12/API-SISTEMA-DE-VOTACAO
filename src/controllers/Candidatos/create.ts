@@ -6,35 +6,39 @@ import { validation } from "../../shared/middlewares/Validation";
 import { ICandidato } from "../../database/models/candidatos";
 const prisma = new PrismaClient();
 
-interface IBodyProps extends Omit<ICandidato, "id_candidato" > {}
+interface IBodyProps extends Omit<ICandidato, "id_candidato"  > {}
 
 export const candidatoUpValidation = validation((getSchema) => ({
 	body: getSchema<IBodyProps>(
 		yup.object().shape({
 			name: yup.string().required().min(5),
             apelido: yup.string().optional().max(60),
+			estado_id: yup.number().required(),
+			municipio_id: yup.number().required()
 		})
 	),
 }));
 
 export const create = async (req: Request<{}, {}, ICandidato>, res: Response) => {
-	const { name, apelido } = req.body;
-	//const requestImages = req.files as Express.Multer.File[];
+	const { name, apelido, estado_id, municipio_id } = req.body;
+	const requestImages = req.files as Express.Multer.File[];
 	try {
 
-			//const images = requestImages.map((image) =>{
-			//	return {
-			//		Url: image.filename
-			//	}
-		//	});
+			const images = requestImages.map((image) =>{
+				return {
+					Url: image.filename
+				}
+		});
 
 
 		const candidato = await prisma.candidato.create({
 			data: {
 				name,
                 apelido,
+				estado_id: Number(estado_id),
+				municipio_id: Number(municipio_id),
 				images:{
-				//	create: images
+					create: images
 				}
 			}
 		});

@@ -2,14 +2,14 @@ import * as get from './GetAll'
 import * as getById from './GetById'
 import * as create from './create'
 import * as deleteById from './deleteById'
-import * as update from './UpdateById'
 
 
-export const CandidatoController = {
+
+export const EstadoController = {
     ...create,
     ...deleteById,
     ...get,
     ...getById,
-    ...update
+   
    
 }

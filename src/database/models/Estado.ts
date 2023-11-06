@@ -1,6 +1,6 @@
 
 
 export interface Estado {
-    estado: string;
+    Estado: string;
     uf: string;
 }

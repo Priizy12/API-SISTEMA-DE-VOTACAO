@@ -1,6 +1,7 @@
 
 generator client {
   provider = "prisma-client-js"
+ 
 }
 
 datasource db {
@@ -20,9 +21,11 @@ model Pesquisadores {
   updatedAt  DateTime   @updatedAt
   Roles Role @relation(fields: [roleId], references: [id])
   roleId Int  
-  
-  estado Estado[] @relation("pesquisador")
-  municipio municipio[] @relation("pesquisador")
+   estado Estado @relation(fields: [estado_id], references: [id_Estado])
+   estado_id Int 
+   Municipio municipio @relation(fields: [municipio_id], references: [idMunicipio])
+   municipio_id Int
+
 }
 
 model Role {
@@ -38,33 +41,30 @@ model Candidato {
    id_candidato Int @id @default(autoincrement())
    name    String @db.VarChar(60) 
    apelido String? @db.VarChar(60) 
+   estado Estado @relation(fields: [estado_id], references: [id_Estado])
+   estado_id Int 
+   Municipio municipio @relation(fields: [municipio_id], references: [idMunicipio])
+   municipio_id Int
    images Images[] 
 
-    uf Estado[] @relation("candidato")
-    muni municipio[] @relation("candidato")
+   
     votos Votos[]
 }
 
 model municipio {
   idMunicipio Int  @id @default(autoincrement())
   Municipio String
-  id_pesquisador Int
-  pesquisador Pesquisadores @relation( "pesquisador",fields: [id_pesquisador], references: [id_Pesquisador])
-  id_Candidato Int
-  candidato Candidato @relation( "candidato",fields: [id_Candidato], references: [id_candidato])
-
+  candidato Candidato[]
+  pesquisador Pesquisadores[]
 }
 
 model Estado {
   id_Estado Int @id @default(autoincrement())
   Estado String 
   uf String @db.VarChar(2)
-  id_pesquisador Int
-  pesquisador Pesquisadores @relation( "pesquisador",fields: [id_pesquisador], references: [id_Pesquisador])
-  id_Candidato Int
-  candidato Candidato @relation( "candidato",fields: [id_Candidato], references: [id_candidato])
 
-
+  candidato Candidato[]
+  pesquisador Pesquisadores[]
 }
 
 
@@ -78,10 +78,8 @@ model Images {
 
 model Votos {
   id_voto Int @id @default(autoincrement())
-  sim Boolean?
-  nao Boolean?
-  nulo Boolean?
-  id_voto_candidato Int
-  candidato Candidato @relation(fields: [id_voto_candidato], references: [id_candidato])
+  Votar Boolean
+  candidato   Candidato @relation(fields: [candidatoId], references: [id_candidato])
+  candidatoId Int
 }
 
