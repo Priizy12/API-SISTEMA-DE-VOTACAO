@@ -8,13 +8,12 @@ const prisma = new PrismaClient();
 
 export const getAll: RequestHandler = async (req, res) => {
     try {
-        const Estado = await prisma.estado.findMany({
+        const Municipio = await prisma.municipio.findMany({
             select:{
-                Estado: true,
-                uf: false
+                Municipio: true
             }
         });
-        return res.status(StatusCodes.OK).json(Estado);
+        return res.status(StatusCodes.OK).json(Municipio);
 
     } catch (error) {
         console.log(error)

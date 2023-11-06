@@ -31,11 +31,12 @@ router.delete("/Candidatos/:id", CandidatoController.deleteById)
 
 //Crud Estados
 router.post("/Estado", EstadoController.create)
+router.get("/Estados", EstadoController.getAll)
 
 
 //Crud Municipios
 router.post("/Municipio", MunicipioController.create)
-
+router.get("/Municipios", MunicipioController.getAll)
 
 //Votacao
 router.post("/Votar", VotacaoController.create)
