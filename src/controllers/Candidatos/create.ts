@@ -35,8 +35,8 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 			data: {
 				name,
                 apelido,
-				estado_id: estado_id,
-				municipio_id: municipio_id,
+				estado_id: Number(estado_id),
+				municipio_id: Number(municipio_id),
 				images:{
 					create: images
 				}

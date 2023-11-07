@@ -17,7 +17,7 @@ interface IBodyProps extends Omit<IRole, 'id'> { }
 
 export const AttRoles = validation((getSchema) => ({
     body: getSchema<IBodyProps>(yup.object().shape({
-        name: yup.string().required().min(3),
+        Role: yup.string().required().min(3),
     })),
 }));
 
@@ -26,14 +26,14 @@ export const updateRoles = async (req: Request<IParamsProps, {}, IBodyProps>, re
 
     try {
         const { id } = req.params;
-        const { name } = req.body
+        const { Role } = req.body
 
-        const updateRole = await prisma.user.update({
+        const updateRole = await prisma.role.update({
             where:
             {
                 id: Number(id)
             }, data: {
-                name
+                Role
             }
         });
 

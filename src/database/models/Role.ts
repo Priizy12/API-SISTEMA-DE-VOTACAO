@@ -2,5 +2,5 @@
 
 export interface IRole {
     id: number;
-    name: string;
+    Role: string;
 }

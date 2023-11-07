@@ -50,7 +50,6 @@ model municipio {
   idMunicipio Int  @id @default(autoincrement())
   Municipio String
   candidato Candidato[]
- 
 }
 
 model Estado {
@@ -72,6 +71,9 @@ model Images {
 
 model Votos {
   id_voto Int @id @default(autoincrement())
+  nome String @db.VarChar(60)
+  Idade Int 
+  Localidade String @db.VarChar(60)
   Votar Boolean
   candidato   Candidato @relation(fields: [candidatoId], references: [id_candidato])
   candidatoId Int

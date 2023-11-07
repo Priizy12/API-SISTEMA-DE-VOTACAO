@@ -10,6 +10,7 @@ import { candidatoValidation } from '../controllers/Candidatos/UpdateById';
 import { EstadoController } from '../controllers/Estados';
 import { MunicipioController } from '../controllers/Municipios';
 import { VotacaoController } from '../controllers/votacao';
+import { RolesController } from '../controllers/Roles';
 
 
 const router = Router();
@@ -38,7 +39,21 @@ router.get("/Estados", EstadoController.getAll)
 router.post("/Municipio", MunicipioController.create)
 router.get("/Municipios", MunicipioController.getAll)
 
-//Votacao
+
+
+//Pesquisador
 router.post("/Votar", VotacaoController.create)
+
+//Administrador
 router.get("/Resultado", VotacaoController.getAll)
+
+
+
+
+
+
+
+
+//Role
+router.post("/Roles", RolesController.create)
 export { router }
