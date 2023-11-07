@@ -40,6 +40,7 @@ model Candidato {
    estado_id Int 
    Municipio municipio @relation(fields: [municipio_id], references: [idMunicipio])
    municipio_id Int
+   Partido String?
    images Images[] 
 
    

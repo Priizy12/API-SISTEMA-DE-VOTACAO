@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { RequestHandler, Request, Response } from "express";
-
+import slug from 'slug'
 
 const prisma = new PrismaClient();
 
@@ -31,7 +31,7 @@ export const create = async (req: Request<{}, {}, votacao>, res: Response) => {
       data: {
         nome,
         Idade: Number(Idade),
-        Localidade,
+        Localidade: slug(Localidade),
         Votar: true,
         candidatoId: candidato.id_candidato
       }

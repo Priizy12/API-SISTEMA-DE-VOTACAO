@@ -11,6 +11,7 @@ export const getAll: RequestHandler = async (req, res) => {
                 votos: {
                     select: {
                         id_voto: true,
+                        
                     }
                 }
             }

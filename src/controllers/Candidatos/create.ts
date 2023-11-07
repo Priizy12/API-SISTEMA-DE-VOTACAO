@@ -14,13 +14,14 @@ export const candidatoUpValidation = validation((getSchema) => ({
 			name: yup.string().required().min(5),
             apelido: yup.string().optional().max(60),
 			estado_id: yup.number().required(),
-			municipio_id: yup.number().required()
+			municipio_id: yup.number().required(),
+			Partido: yup.string().optional()
 		})
 	),
 }));
 
 export const create = async (req: Request<{}, {}, ICandidato>, res: Response) => {
-	const { name, apelido, estado_id, municipio_id } = req.body;
+	const { name, apelido, estado_id, municipio_id, Partido } = req.body;
 	const requestImages = req.files as Express.Multer.File[];
 	try {
 
@@ -35,6 +36,7 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 			data: {
 				name,
                 apelido,
+				Partido,
 				estado_id: Number(estado_id),
 				municipio_id: Number(municipio_id),
 				images:{
