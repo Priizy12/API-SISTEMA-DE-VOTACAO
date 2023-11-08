@@ -11,13 +11,14 @@ interface IParamProps {
     id_candidato: number;
 }
 
-interface IBodyProps extends Omit<ICandidato, 'id_candidato' | 'estado_id' | 'municipio_id'> {}
+interface IBodyProps extends Omit<ICandidato, 'id_candidato'> {}
 
 
 export const candidatoValidation = validation((getSchema) => ({
     body: getSchema<IBodyProps>(yup.object().shape({
         name: yup.string().required().max(60),
-        apelido: yup.string().optional()
+        apelido: yup.string().optional(),
+        Partido: yup.string().optional()
     })),
     params: getSchema<IParamProps>(yup.object().shape({
         id_candidato: yup.number().required().min(1)
@@ -27,7 +28,7 @@ export const candidatoValidation = validation((getSchema) => ({
 export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) => {
 
     const { id_candidato } = req.params as IParamProps
-    const { name, apelido } = req.body;
+    const { name, apelido, Partido } = req.body;
     const requestImages = req.files as Express.Multer.File[];
     try {
 
@@ -45,6 +46,7 @@ export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) =
             data:{
                 name,
                 apelido,
+                Partido,
                images:{
                 create: images
                }

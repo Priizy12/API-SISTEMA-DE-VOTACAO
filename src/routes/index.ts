@@ -7,8 +7,7 @@ import { PesquisadorController } from '../controllers/Pesquisadores';
 import { signUpValidation } from '../controllers/Pesquisadores/signup';
 import { candidatoUpValidation } from '../controllers/Candidatos/create';
 import { candidatoValidation } from '../controllers/Candidatos/UpdateById';
-import { EstadoController } from '../controllers/Estados';
-import { MunicipioController } from '../controllers/Municipios';
+
 import { VotacaoController } from '../controllers/votacao';
 import { RolesController } from '../controllers/Roles';
 
@@ -26,18 +25,9 @@ router.post('/Login', signInValidation, PesquisadorController.signIn)
 //Cadastro de Candidatos --> ( Administrador )
 router.post("/Candidatos" , upload.array('images'),   candidatoUpValidation, CandidatoController.create )
 router.get("/Candidatos", CandidatoController.getAll)
-router.get("/Candidatos/:id", CandidatoController.getById)
-router.put("/Candidatos/:id",  candidatoValidation ,CandidatoController.uptdate)
-router.delete("/Candidatos/:id", CandidatoController.deleteById)
-
-//Crud Estados
-router.post("/Estado", EstadoController.create)
-router.get("/Estados", EstadoController.getAll)
-
-
-//Crud Municipios
-router.post("/Municipio", MunicipioController.create)
-router.get("/Municipios", MunicipioController.getAll)
+router.get("/Candidatos/:id_candidato", CandidatoController.getById)
+router.put("/Candidatos/:id_candidato",  candidatoValidation ,CandidatoController.uptdate)
+router.delete("/Candidatos/:id_candidato", CandidatoController.deleteById)
 
 
 
