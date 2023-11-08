@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { PrismaClient, municipio } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { StatusCodes } from "http-status-codes";
 
 const prisma = new PrismaClient();
@@ -12,8 +12,6 @@ export const getAll: RequestHandler = async (req, res) => {
             select: {
                 name: true,
                 apelido: true,
-                estado: true,
-                Municipio: true,
                 images: true,
                 Partido: true
             }

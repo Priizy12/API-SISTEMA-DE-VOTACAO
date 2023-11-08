@@ -10,9 +10,9 @@ interface IParamProps {
 }
 
 
-export const deleteById = async (req: Request<IParamProps, {}, {}>, res: Response) =>{
+export const deleteById = async (req: Request<{}, {}, {}>, res: Response) =>{
 
-    const  { id_candidato } = req.params
+    const  { id_candidato } = req.params as IParamProps
 
     try {
         if(!req.params) return res.status(StatusCodes.BAD_REQUEST).json()
