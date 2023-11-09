@@ -57,7 +57,7 @@ export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) 
         }
     });
     
-   const token =  jwt.sign({id: user.id_Pesquisador}, 'wNx3UP8NQiX3hQv2dBDnaf3rj4rgA71hR' , {
+   const token =  jwt.sign({id: user.id_Pesquisador}, 'kkkkkkkkkkkkk' , {
         expiresIn: "24h"
     } )
 

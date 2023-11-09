@@ -23,7 +23,7 @@ export const Validation: RequestHandler = (req, res, next) =>{
     if(!token) return res.status(StatusCodes.UNAUTHORIZED).json({default:{error:{msg: "Não autenticado"}}})
 
     try {
-        const data = jwt.verify(token, 'wNx3UP8NQiX3hQv2dBDnaf3rj4rgA71hR')
+        const data = jwt.verify(token, 'kkkkkkkkkkkkk')
         const { id } = data as TokenPayload
         req.userId = id
 
