@@ -28,7 +28,8 @@ export const Validation: RequestHandler = (req, res, next) =>{
         req.userId = id
 
         return next();
-     } catch (error) {
+     } catch (e) {
+        console.log(e)
         return res.status(StatusCodes.UNAUTHORIZED).json({default:{error:{msg: "Token invalido"}}})
     }
 }

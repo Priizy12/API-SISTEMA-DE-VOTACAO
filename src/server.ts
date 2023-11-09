@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors'
 import { router } from './routes'
 import path from 'path'
-
+import  './shared/services/Translation'
 
 const app = express();
 app.use(express.json())
