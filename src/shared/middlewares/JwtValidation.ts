@@ -12,6 +12,10 @@ interface TokenPayload {
 export const Validation: RequestHandler = (req, res, next) =>{
     const { authorization } = req.headers
 
+    if (!authorization || authorization.split(' ').length !== 2) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({ default: { error: { msg: "Não autenticado" } } })
+    }
+    
     if(!authorization) return res.status(StatusCodes.UNAUTHORIZED).json({default:{
         error:{
             msg:"Não autenticado"
