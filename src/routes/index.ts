@@ -17,7 +17,7 @@ const router = Router();
 const upload = multer(multerConfig) 
 
 //Cadastro de Pesquisdor --> ( Administrador )
-router.post('/cadastro', signUpValidation, PesquisadorController.signUp )
+router.post('/cadastro',  signUpValidation, PesquisadorController.signUp )
 router.post('/Login', signInValidation, PesquisadorController.signIn)
 
 
@@ -25,7 +25,7 @@ router.post('/Login', signInValidation, PesquisadorController.signIn)
 
 //Cadastro de Candidatos --> ( Administrador )
 router.post("/Candidatos" , upload.array('images'),  Validation , candidatoUpValidation, CandidatoController.create )
-router.get("/Candidatos", CandidatoController.getAll)
+router.get("/Candidatos", Validation, CandidatoController.getAll)
 router.get("/Candidatos/:id_candidato",  Validation , CandidatoController.getById)
 router.put("/Candidatos/:id_candidato",  Validation , candidatoValidation ,CandidatoController.uptdate)
 router.delete("/Candidatos/:id_candidato",  Validation , CandidatoController.deleteById)
