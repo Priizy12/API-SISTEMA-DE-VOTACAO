@@ -3,8 +3,7 @@ import cors from 'cors'
 import { router } from './routes'
 import path from 'path'
 import  './shared/services/Translation'
-import * as dotenv from 'dotenv';
-dotenv.config();
+import '../src/shared/config/env'
 
 const app = express();
 app.use(express.json())

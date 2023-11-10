@@ -6,6 +6,13 @@ import * as jwt from 'jsonwebtoken'
 import { IPesquisador } from "../../database/models";
 import { validation } from '../../shared/middlewares/Validation';
 import * as yup from 'yup'
+declare global {
+    namespace NodeJS {
+        interface ProcessEnv {
+            JWT_SECRET: string;
+        }
+    }
+}
 const prisma = new PrismaClient()
 
 
@@ -57,9 +64,9 @@ export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) 
             }
         });
 
-        const token = jwt.sign({ id: user.id_Pesquisador }, 'dkajhfawhfaklsaf' || process.env.JWT_SECRET, {
+        const token = jwt.sign({ id: user.id_Pesquisador }, process.env.JWT_SECRET, {
             expiresIn: "1hr"
-        }).trim()
+        })
 
         return res.status(StatusCodes.OK).json({
             msg: "Logado com sucesso",
