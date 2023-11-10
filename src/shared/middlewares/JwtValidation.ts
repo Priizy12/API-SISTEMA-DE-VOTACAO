@@ -19,7 +19,8 @@ export const Validation: RequestHandler = (req, res, next) => {
         }
     })
 
-    const [ ,token] = authorization.split(' ')
+    const [token] = authorization.split(' ').map(part => part.trim());
+
 
 
     if (!token) return res.status(StatusCodes.UNAUTHORIZED).json({ default: { error: { msg: "Não autenticado" } } })
