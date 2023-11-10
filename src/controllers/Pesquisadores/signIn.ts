@@ -10,73 +10,73 @@ const prisma = new PrismaClient()
 
 
 
-interface IBodyProps extends Omit<IPesquisador, 'id_pesquisador' | 'name' |  'roleId' | 'cpf'> {  }
+interface IBodyProps extends Omit<IPesquisador, 'id_pesquisador' | 'name' | 'roleId' | 'cpf'> { }
 
 
 
 export const signInValidation = validation((getSchema) => ({
     body: getSchema<IBodyProps>(yup.object().shape({
-      email: yup.string().required().email().min(5),
-      senha: yup.string().required().min(6),
+        email: yup.string().required().email().min(5),
+        senha: yup.string().required().min(6),
     })),
-  }));
+}));
 
 
 
-export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) =>{
-    const {email, senha} = req.body
-  
-  try {
-    const user: {
-        id_Pesquisador: number;
-        email: string;
-        name: string;
-        cpf: string;
-        senha: string;
-        createdAt: Date;
-        updatedAt: Date;
-        roleId: number;
-    } | null = await prisma.pesquisadores.findFirst({ where: { email } });
+export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) => {
+    const { email, senha } = req.body
+
+    try {
+        const user: {
+            id_Pesquisador: number;
+            email: string;
+            name: string;
+            cpf: string;
+            senha: string;
+            createdAt: Date;
+            updatedAt: Date;
+            roleId: number;
+        } | null = await prisma.pesquisadores.findFirst({ where: { email } });
 
 
-    if(!user) return res.status(StatusCodes.UNAUTHORIZED).json({
-        default:{
-            error:{
-                msg: "Email ou senha incorretos"
+        if (!user) return res.status(StatusCodes.UNAUTHORIZED).json({
+            default: {
+                error: {
+                    msg: "Email ou senha incorretos"
+                }
             }
-        }
-    });
+        });
 
-    const verifyPass = await bcrypt.compare(senha, user.senha)
+        const verifyPass = await bcrypt.compare(senha, user.senha)
 
-    if(!verifyPass) return res.status(StatusCodes.UNAUTHORIZED).json({
-        default:{
-            error:{
-                msg: "Email ou senha incorretos"
+        if (!verifyPass) return res.status(StatusCodes.UNAUTHORIZED).json({
+            default: {
+                error: {
+                    msg: "Email ou senha incorretos"
+                }
             }
-        }
-    });
-    
-   const token =  jwt.sign({id: user.id_Pesquisador}, 'kkkkkkkkkkkkk' , {
-        expiresIn: "24h"
-    } )
+        });
 
-    return res.status(StatusCodes.OK).json({
-       msg: "Logado com sucesso",
-       acessToken: token
+        const token = jwt.sign({ id: user.id_Pesquisador }, 'dkajhfawhfaklsaf' || process.env.JWT_SECRET, {
+            expiresIn: "1hr"
+        }).trim()
 
-    })
-    
-  } catch (error) {
-  console.log(error)
-    return res.status(StatusCodes.UNAUTHORIZED).json({
-        default:{
-            error:{
-                msg: "Email ou senha incorretos"
+        return res.status(StatusCodes.OK).json({
+            msg: "Logado com sucesso",
+            acessToken: token
+
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+            default: {
+                error: {
+                    msg: "Email ou senha incorretos"
+                }
             }
-        }
-    })
-  }
+        })
+    }
 
 
 }
