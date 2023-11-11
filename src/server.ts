@@ -5,6 +5,14 @@ import path from 'path'
 import  './shared/services/Translation'
 import '../src/shared/config/env'
 
+declare global {
+    namespace NodeJS {
+        interface ProcessEnv {
+            JWT_SECRET: string;
+        }
+    }
+}
+
 const app = express();
 app.use(express.json())
 app.use((req, res, next) => {
