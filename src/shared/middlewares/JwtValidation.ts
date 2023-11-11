@@ -1,6 +1,7 @@
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import * as jwt from 'jsonwebtoken'
+import '../src/shared/config/env'
 
 interface Payload {
     id: string;
@@ -9,13 +10,13 @@ interface Payload {
 }
 
 
-export const AUTH = (req: Request<{}, {}, Payload>, res: Response, next: NextFunction) => {
+export const AUTH: RequestHandler = (req, res, next) => {
 
-    
-    
-    const bearer = req.headers.authorization
 
-    if (!bearer) return res.status(StatusCodes.UNAUTHORIZED).json({
+
+    const { authorization } = req.headers
+
+    if (!authorization) return res.status(StatusCodes.UNAUTHORIZED).json({
         default: {
             error: {
                 msg: "Não autenticado"
@@ -23,7 +24,7 @@ export const AUTH = (req: Request<{}, {}, Payload>, res: Response, next: NextFun
         }
     })
 
-    const [, token] = bearer.split(' ').map(part => part.trim());
+    const [token] = authorization.split(' ').map(part => part.trim());
 
 
     if (!token) return res.status(StatusCodes.UNAUTHORIZED).json({ default: { error: { msg: "Não autenticado" } } })

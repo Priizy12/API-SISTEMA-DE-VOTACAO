@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken'
 import { IPesquisador } from "../../database/models";
+import '../src/shared/config/env'
 import { validation } from '../../shared/middlewares/Validation';
 import * as yup from 'yup'
 
@@ -60,7 +61,7 @@ export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) 
 
         const token = jwt.sign({idPesquisador: user.id_Pesquisador}, process.env.JWT_SECRET, {
             expiresIn: "24hrs"
-        })
+        }).trim()
 
         return res.status(StatusCodes.OK).json({
             msg: "Logado com sucesso",
