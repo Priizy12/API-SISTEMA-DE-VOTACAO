@@ -24,29 +24,29 @@ router.post('/Login', signInValidation, PesquisadorController.signIn)
 
 
 //Cadastro de Candidatos --> ( Administrador )
-router.post("/Candidatos" , upload.array('images'),  candidatoUpValidation, CandidatoController.create )
-router.get("/Candidatos",  CandidatoController.getAll)
-router.get("/Candidatos/:id_candidato",  CandidatoController.getById)
-router.put("/Candidatos/:id_candidato",  candidatoValidation ,CandidatoController.uptdate)
-router.delete("/Candidatos/:id_candidato",  CandidatoController.deleteById)
+router.post("/Candidatos" , upload.array('images'), AUTH, candidatoUpValidation, CandidatoController.create )
+router.get("/Candidatos", AUTH, CandidatoController.getAll)
+router.get("/Candidatos/:id_candidato",  AUTH , CandidatoController.getById)
+router.put("/Candidatos/:id_candidato",  AUTH , candidatoValidation ,CandidatoController.uptdate)
+router.delete("/Candidatos/:id_candidato",  AUTH , CandidatoController.deleteById)
 
 
 
 //Pesquisador
-router.post("/Votar",  VotacaoController.create)
+router.post("/Votar", AUTH , VotacaoController.create)
 
 //Administrador
-router.get("/Resultado", VotacaoController.getAll)
+router.get("/Resultado", AUTH , VotacaoController.getAll)
 
 
 
 //Painel Administrativo
-router.get("/Pesquisadores",   PesquisadorController.getAll)
-router.get("/Pesquisador/:id_Pesquisador",   PesquisadorController.getById)
-router.put("/Pesquisador/:id_Pesquisador",   PesquisadorValidation , PesquisadorController.uptdate)
-router.delete("/Pesquisador/:id_Pesquisador",   PesquisadorController.deleteById)
+router.get("/Pesquisadores", AUTH ,  PesquisadorController.getAll)
+router.get("/Pesquisador/:id_Pesquisador",  AUTH , PesquisadorController.getById)
+router.put("/Pesquisador/:id_Pesquisador",  AUTH , PesquisadorValidation , PesquisadorController.uptdate)
+router.delete("/Pesquisador/:id_Pesquisador",  AUTH , PesquisadorController.deleteById)
 
 
 //Role
-router.post("/Roles", RolesController.create)
+router.post("/Roles", AUTH ,RolesController.create)
 export { router }
