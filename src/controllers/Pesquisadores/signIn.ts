@@ -4,7 +4,6 @@ import { StatusCodes } from "http-status-codes";
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken'
 import { IPesquisador } from "../../database/models";
-import '../src/shared/config/env'
 import { validation } from '../../shared/middlewares/Validation';
 import * as yup from 'yup'
 

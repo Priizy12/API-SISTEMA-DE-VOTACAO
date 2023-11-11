@@ -1,7 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import * as jwt from 'jsonwebtoken'
-import '../src/shared/config/env'
+
 
 interface Payload {
     id: string;
