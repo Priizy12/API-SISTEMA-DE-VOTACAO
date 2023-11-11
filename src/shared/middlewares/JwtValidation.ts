@@ -8,7 +8,7 @@ interface TokenPayload {
     exp: number;
 }
 
-export const Validation: RequestHandler = (req, res, next) => {
+export const AUTH: RequestHandler = (req, res, next) => {
     const { authorization } = req.headers
 
     if (!authorization) return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -19,14 +19,13 @@ export const Validation: RequestHandler = (req, res, next) => {
         }
     })
 
-    const [token] = authorization.split(' ').map(part => part.trim());
+    const [, token] = authorization.split(' ').map(part => part.trim());
 
 
 
     if (!token) return res.status(StatusCodes.UNAUTHORIZED).json({ default: { error: { msg: "Não autenticado" } } })
 
     try {
-
         const data = jwt.verify(token, process.env.JWT_SECRET);
         const { id } = data as TokenPayload
         req.userId = id

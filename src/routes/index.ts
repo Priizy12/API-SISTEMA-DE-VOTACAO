@@ -7,7 +7,7 @@ import { PesquisadorController } from '../controllers/Pesquisadores';
 import { signUpValidation } from '../controllers/Pesquisadores/signup';
 import { candidatoUpValidation } from '../controllers/Candidatos/create';
 import { candidatoValidation } from '../controllers/Candidatos/UpdateById';
-import { Validation } from '../shared/middlewares/JwtValidation'
+import { AUTH } from '../shared/middlewares/JwtValidation'
 import { VotacaoController } from '../controllers/votacao';
 import { RolesController } from '../controllers/Roles';
 import { PesquisadorValidation } from '../controllers/Pesquisadores/UpdateById';
@@ -24,29 +24,29 @@ router.post('/Login', signInValidation, PesquisadorController.signIn)
 
 
 //Cadastro de Candidatos --> ( Administrador )
-router.post("/Candidatos" , upload.array('images'), Validation, candidatoUpValidation, CandidatoController.create )
-router.get("/Candidatos", Validation, CandidatoController.getAll)
-router.get("/Candidatos/:id_candidato",  Validation , CandidatoController.getById)
-router.put("/Candidatos/:id_candidato",  Validation , candidatoValidation ,CandidatoController.uptdate)
-router.delete("/Candidatos/:id_candidato",  Validation , CandidatoController.deleteById)
+router.post("/Candidatos" , upload.array('images'), AUTH, candidatoUpValidation, CandidatoController.create )
+router.get("/Candidatos", AUTH, CandidatoController.getAll)
+router.get("/Candidatos/:id_candidato",  AUTH , CandidatoController.getById)
+router.put("/Candidatos/:id_candidato",  AUTH , candidatoValidation ,CandidatoController.uptdate)
+router.delete("/Candidatos/:id_candidato",  AUTH , CandidatoController.deleteById)
 
 
 
 //Pesquisador
-router.post("/Votar",   Validation , VotacaoController.create)
+router.post("/Votar",   AUTH , VotacaoController.create)
 
 //Administrador
-router.get("/Resultado",  Validation , VotacaoController.getAll)
+router.get("/Resultado",  AUTH , VotacaoController.getAll)
 
 
 
 //Painel Administrativo
-router.get("/Pesquisadores", Validation ,  PesquisadorController.getAll)
-router.get("/Pesquisador/:id_Pesquisador",  Validation , PesquisadorController.getById)
-router.put("/Pesquisador/:id_Pesquisador",  Validation , PesquisadorValidation , PesquisadorController.uptdate)
-router.delete("/Pesquisador/:id_Pesquisador",  Validation , PesquisadorController.deleteById)
+router.get("/Pesquisadores", AUTH ,  PesquisadorController.getAll)
+router.get("/Pesquisador/:id_Pesquisador",  AUTH , PesquisadorController.getById)
+router.put("/Pesquisador/:id_Pesquisador",  AUTH , PesquisadorValidation , PesquisadorController.uptdate)
+router.delete("/Pesquisador/:id_Pesquisador",  AUTH , PesquisadorController.deleteById)
 
 
 //Role
-router.post("/Roles", RolesController.create)
+router.post("/Roles", AUTH ,RolesController.create)
 export { router }
