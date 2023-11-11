@@ -4,9 +4,6 @@ import { router } from './routes'
 import path from 'path'
 import  './shared/services/Translation'
 import '../src/shared/config/env'
-import dotenv from 'dotenv'
-dotenv.config()
-
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
@@ -14,7 +11,6 @@ declare global {
         }
     }
 }
-
 const app = express();
 app.use(express.json())
 app.use((req, res, next) => {
