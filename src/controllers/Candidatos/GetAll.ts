@@ -10,6 +10,7 @@ export const getAll: RequestHandler = async (req, res) => {
     try {
         const Candidato = await prisma.candidato.findMany({
             select: {
+                id_candidato: true,
                 name: true,
                 apelido: true,
                 images: true,
