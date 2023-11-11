@@ -24,7 +24,7 @@ export const AUTH: RequestHandler = (req, res, next) => {
         }
     })
 
-    const [token] = authorization.split(' ').map(part => part.trim());
+    const [token] = authorization.split(" ").map(part => part.trim());
 
 
     if (!token) return res.status(StatusCodes.UNAUTHORIZED).json({ default: { error: { msg: "Não autenticado" } } })
