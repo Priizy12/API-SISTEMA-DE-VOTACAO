@@ -13,7 +13,7 @@ interface TokenPayload {
 export const AUTH: RequestHandler = (req, res, next) => {
 
     const authjwt = jwt.verify
-    
+
     const { authorization } = req.headers
 
     if (!authorization) return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -24,7 +24,7 @@ export const AUTH: RequestHandler = (req, res, next) => {
         }
     })
 
-    const [, token] = authorization.split(' ').map(part => part.trim());
+    const [, token] = authorization.replace(/Bearer\s/, ' ').trim();
 
 
 
