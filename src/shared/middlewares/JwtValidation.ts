@@ -17,7 +17,7 @@ export const AUTH: RequestHandler = (req, res, next) => {
     if(!authorization) return res.status(StatusCodes.UNAUTHORIZED).json({message: "não autenticado"})
 
         try {
-            const [,token] = authorization.split(' ')
+            const [,token] = authorization.split(' ').map(part => part.trim());
             if(!token) return res.status(StatusCodes.UNAUTHORIZED).json({message: "não autenticado"})
             
             const data = jwt.verify(token, process.env.JWT_SECRET)
