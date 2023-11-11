@@ -33,10 +33,10 @@ router.delete("/Candidatos/:id_candidato",  AUTH , CandidatoController.deleteByI
 
 
 //Pesquisador
-router.post("/Votar",   AUTH , VotacaoController.create)
+router.post("/Votar", AUTH , VotacaoController.create)
 
 //Administrador
-router.get("/Resultado",  AUTH , VotacaoController.getAll)
+router.get("/Resultado", AUTH , VotacaoController.getAll)
 
 
 
