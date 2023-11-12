@@ -49,10 +49,10 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 				name,
                 apelido,
 				Partido,
-				logradouro: endereco.logradouro,
-				cidade: endereco.cidade,
-				estado: endereco.estado,
-				bairro: endereco.bairro,
+				logradouro: endereco.logradouro || '',
+				cidade: endereco.cidade || '',
+				estado: endereco.estado || '',
+				bairro: endereco.bairro || '',
 				images:{
 					create: images
 				}
