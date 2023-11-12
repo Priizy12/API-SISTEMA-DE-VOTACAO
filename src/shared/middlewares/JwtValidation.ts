@@ -1,7 +1,6 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
-import * as jwt from 'jsonwebtoken'
-
+import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import * as jwt from 'jsonwebtoken';
 
 interface Payload {
     id: string;
@@ -9,24 +8,30 @@ interface Payload {
     exp: number;
 }
 
+export const AUTH: RequestHandler = async (req, res, next) => {
+    const { authorization } = req.headers;
 
-export const AUTH: RequestHandler = (req, res, next) => {
+    if (!authorization) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Não autenticado" });
+    }
 
-    const {authorization} = req.headers;
+    const [bearer, token] = authorization.split(' ');
 
-    if(!authorization) return res.status(StatusCodes.UNAUTHORIZED).json({message: "não autenticado"})
+    if (bearer !== 'Bearer' || !token) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Formato de token inválido" });
+    }
 
-        try {
-            const [,token] = authorization.split(' ').map(part => part.trim());
-            if(!token) return res.status(StatusCodes.UNAUTHORIZED).json({message: "não autenticado"})
-            
-            const data = jwt.verify(token, process.env.JWT_SECRET)
-            const { id } = data as Payload
-            req.userId = id
+    try {
+        // Imprimir o token para fins de depuração
+        console.log('Token recebido:', token);
 
-            return next()
-        } catch (error) {
-            console.log(error)
-            return res.status(StatusCodes.UNAUTHORIZED).json({message: "Token Invalido"})
-        }
-}
+        // Verificar o token usando a biblioteca JWT
+        const data =  jwt.verify(token, 'teste_Secret'); 
+        const { id } = data as Payload;
+        req.userId = id;
+        return next();
+    } catch (error) {
+        console.error(error);
+        return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Token inválido" });
+    }
+};
