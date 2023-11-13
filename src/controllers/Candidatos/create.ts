@@ -15,7 +15,6 @@ export const candidatoUpValidation = validation((getSchema) => ({
 			name: yup.string().required().min(5),
             apelido: yup.string().optional().max(60),
 			Partido: yup.string().optional(),
-			cep: yup.string().required().length(8),
 			cidade: yup.string().required(),
 			estado: yup.string().required()
 		})
@@ -23,7 +22,7 @@ export const candidatoUpValidation = validation((getSchema) => ({
 }))
 
 
-const getEnderecoByCep = async (cep: string) => {
+/*const getEnderecoByCep = async (cep: string) => {
 	try {
 	  const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 	  return response.data;
@@ -31,20 +30,20 @@ const getEnderecoByCep = async (cep: string) => {
 	  console.error('Erro ao obter endereço por CEP:', error.message);
 	  throw error;
 	}
-  };
+  };*/
 
 export const create = async (req: Request<{}, {}, ICandidato>, res: Response) => {
-	const { name, apelido, Partido, cidade, estado, cep} = req.body;
+	const { name, apelido, Partido, cidade, estado} = req.body;
 	const requestImages = req.files as Express.Multer.File[];
 	try {
-		const endereco = await getEnderecoByCep(cep);
+		/*const endereco = await getEnderecoByCep(cep);
 		if (!endereco || endereco.erro) {
 			return res.status(StatusCodes.BAD_REQUEST).json({
 			  error: {
 				msg: "CEP inválido ou não encontrado.",
 			  },
 			});
-		  }
+		  }*/
 
 		  let images: any[] = [];
 		  if (requestImages && Array.isArray(requestImages)) {
@@ -61,8 +60,8 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 				name,
                 apelido,
 				Partido,
-				cidade: endereco.cidade,
-				estado: endereco.estado,
+				cidade,
+				estado,
 				images:{
 					create: images
 				}

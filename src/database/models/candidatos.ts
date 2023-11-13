@@ -6,7 +6,6 @@ export interface ICandidato {
     name: string;
     apelido?: string;
     Partido?: string;
-    cep: string;
     cidade: string;
     estado: string;
 }
