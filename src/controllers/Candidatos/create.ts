@@ -45,12 +45,16 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 			  },
 			});
 		  }
-		  
-			const images = requestImages.map((image) =>{
-				return {
-					Url: image.filename
-				}
-		});
+
+		  let images: any[] = [];
+		  if (requestImages && Array.isArray(requestImages)) {
+			  images = requestImages.map((image) => {
+				  return {
+					  Url: image.filename,
+				  };
+			  });
+		  }
+		
 
 		const candidato = await prisma.candidato.create({
 			data: {
