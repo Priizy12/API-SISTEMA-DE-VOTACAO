@@ -23,7 +23,7 @@ export const candidatoUpValidation = validation((getSchema) => ({
 }))
 
 
-/*const getEnderecoByCep = async (cep: string) => {
+const getEnderecoByCep = async (cep: string) => {
 	try {
 	  const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 	  return response.data;
@@ -31,36 +31,34 @@ export const candidatoUpValidation = validation((getSchema) => ({
 	  console.error('Erro ao obter endereço por CEP:', error.message);
 	  throw error;
 	}
-  };*/
+  };
 
 export const create = async (req: Request<{}, {}, ICandidato>, res: Response) => {
-	const { name, apelido, Partido, cidade, estado  } = req.body;
+	const { name, apelido, Partido, cidade, estado, cep} = req.body;
 	const requestImages = req.files as Express.Multer.File[];
 	try {
-
-		/*const endereco = await getEnderecoByCep(cep);
+		const endereco = await getEnderecoByCep(cep);
 		if (!endereco || endereco.erro) {
 			return res.status(StatusCodes.BAD_REQUEST).json({
 			  error: {
 				msg: "CEP inválido ou não encontrado.",
 			  },
 			});
-		  }*/
-
+		  }
+		  
 			const images = requestImages.map((image) =>{
 				return {
 					Url: image.filename
 				}
 		});
 
-		
 		const candidato = await prisma.candidato.create({
 			data: {
 				name,
                 apelido,
 				Partido,
-				cidade,
-				estado,
+				cidade: endereco.cidade,
+				estado: endereco.estado,
 				images:{
 					create: images
 				}
