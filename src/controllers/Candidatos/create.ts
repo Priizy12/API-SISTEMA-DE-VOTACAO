@@ -22,7 +22,6 @@ export const candidatoUpValidation = validation((getSchema) => ({
 
 
 const getEnderecoByCep = async (cep: string) => {
-	
 	try {
 	  const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 	  return response.data;
@@ -53,23 +52,20 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 		});
 
 		
-
 		const candidato = await prisma.candidato.create({
 			data: {
 				name,
                 apelido,
 				Partido,
-				logradouro: endereco.logradouro ,
-				cidade: endereco.cidade ,
-				estado: endereco.estado ,
-				bairro: endereco.bairro ,
+				cidade: endereco.cidade,
+				estado: endereco.estado,
 				images:{
 					create: images
 				}
 			}
 		});
 
-	
+		
 		return res.status(StatusCodes.OK).json({
 			msg: "Candidato Registrado com sucesso",
 			candidato,

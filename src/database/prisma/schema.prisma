@@ -37,8 +37,6 @@ model Candidato {
    name    String @db.VarChar(60) 
    apelido String? @db.VarChar(60) 
    Partido String?
-   logradouro String
-   bairro String 
    cidade String
    estado String
    images Images[] 
