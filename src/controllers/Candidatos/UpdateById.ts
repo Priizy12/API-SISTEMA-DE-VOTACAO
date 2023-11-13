@@ -18,7 +18,8 @@ export const candidatoValidation = validation((getSchema) => ({
     body: getSchema<IBodyProps>(yup.object().shape({
         name: yup.string().required().max(60),
         apelido: yup.string().optional(),
-        Partido: yup.string().optional()
+        Partido: yup.string().optional(),
+        cep: yup.string().required().length(8)
     })),
     params: getSchema<IParamProps>(yup.object().shape({
         id_candidato: yup.number().required().min(1)
@@ -28,7 +29,7 @@ export const candidatoValidation = validation((getSchema) => ({
 export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) => {
 
     const { id_candidato } = req.params as IParamProps
-    const { name, apelido, Partido } = req.body;
+    const { name, apelido, Partido, cep } = req.body;
     const requestImages = req.files as Express.Multer.File[];
     try {
 

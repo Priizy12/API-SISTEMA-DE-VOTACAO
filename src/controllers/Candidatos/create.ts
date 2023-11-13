@@ -7,7 +7,7 @@ import { ICandidato } from "../../database/models/candidatos";
 import axios from 'axios'
 const prisma = new PrismaClient();
 
-interface IBodyProps extends Omit<ICandidato, "id_candidato" | "estado" | 'bairro' | 'cidade' | 'logradouro' > {}
+interface IBodyProps extends Omit<ICandidato, "id_candidato" > {}
 
 export const candidatoUpValidation = validation((getSchema) => ({
 	body: getSchema<IBodyProps>(
