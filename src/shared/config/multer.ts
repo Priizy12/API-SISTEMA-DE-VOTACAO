@@ -4,10 +4,10 @@ import { randomBytes } from 'crypto';
 import * as fs from 'fs';
 
 export const multerConfig = {
-    dest: resolve(__dirname, '..', '..', '/uploads'),
+    dest: resolve(__dirname, '..', '..', 'uploads'),
     storage: diskStorage({
         destination: (request, file, callback) => {
-            const destDir = resolve(__dirname, '..', '..', '/uploads');
+            const destDir = resolve(__dirname, '..', '..', 'uploads');
             if (!fs.existsSync(destDir)) {
                 fs.mkdirSync(destDir, { recursive: true });
             }
@@ -28,7 +28,10 @@ export const multerConfig = {
         fileSize: 5 * 1024 * 1024,
     },
     fileFilter: (request, file, callback) => {
-        const formats = ['image/jpeg', 'image/jpg', 'image/png'];
+        const formats = [
+         'image/jpeg',
+         'image/jpg',
+         'image/png'];
         if (formats.includes(file.mimetype)) {
             callback(null, true);
         } else {
