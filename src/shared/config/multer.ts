@@ -1,12 +1,11 @@
 import {Options, diskStorage } from 'multer'
-import { resolve } from 'path'
+import path from 'path'
 import { randomBytes } from 'crypto'
 
 export const multerConfig = {
-    dest: resolve(__dirname, '..', '..', 'tmp', 'uploads'),
     storage: diskStorage({
     destination: (request, file, callback) =>{
-        callback(null, resolve(__dirname, '..', '..',  'tmp',  'uploads'))
+        callback(null, path.join(__dirname, '..', '..',  'tmp',  'uploads'))
         
     },
     filename: (request, file, callback) =>{
