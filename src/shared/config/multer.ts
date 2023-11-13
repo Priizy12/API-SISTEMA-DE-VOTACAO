@@ -4,11 +4,10 @@ import { randomBytes } from 'crypto';
 import * as fs from 'fs';
 
 export const multerConfig = {
-    dest: resolve(__dirname, '..', '..', 'uploads'),
+    dest: resolve(__dirname, '..', '..', '/uploads'),
     storage: diskStorage({
         destination: (request, file, callback) => {
-            // Verificar e criar o diretório de destino, se necessário
-            const destDir = resolve(__dirname, '..', '..', 'uploads');
+            const destDir = resolve(__dirname, '..', '..', '/uploads');
             if (!fs.existsSync(destDir)) {
                 fs.mkdirSync(destDir, { recursive: true });
             }
