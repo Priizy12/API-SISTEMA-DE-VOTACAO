@@ -7,7 +7,7 @@ import { PesquisadorController } from '../controllers/Pesquisadores';
 import { signUpValidation } from '../controllers/Pesquisadores/signup';
 import { candidatoUpValidation } from '../controllers/Candidatos/create';
 import { candidatoValidation } from '../controllers/Candidatos/UpdateById';
-import { AUTH } from '../shared/middlewares/JwtValidation';
+import { Validation } from '../shared/middlewares/JwtValidation';
 import { VotacaoController } from '../controllers/votacao';
 import { RolesController } from '../controllers/Roles';
 import { PesquisadorValidation } from '../controllers/Pesquisadores/UpdateById';
@@ -24,8 +24,8 @@ router.post('/Login', signInValidation, PesquisadorController.signIn)
 
 
 //Cadastro de Candidatos --> ( Administrador )
-router.post("/Candidatos" ,  upload.array("images"),  candidatoUpValidation, CandidatoController.create)
-router.get("/Candidatos",  CandidatoController.getAll)
+router.post("/Candidatos" ,  upload.single("images"),  candidatoUpValidation, CandidatoController.create)
+router.get("/Candidatos", Validation,  CandidatoController.getAll)
 router.get("/Candidatos/:id_candidato",  CandidatoController.getById)
 router.put("/Candidatos/:id_candidato",  candidatoValidation ,CandidatoController.uptdate)
 router.delete("/Candidatos/:id_candidato",  CandidatoController.deleteById)

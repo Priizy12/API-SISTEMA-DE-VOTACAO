@@ -14,7 +14,9 @@ export const getAll: RequestHandler = async (req, res) => {
                 name: true,
                 apelido: true,
                 images: true,
-                Partido: true
+                Partido: true,
+                estado: true,
+                cidade: true
             }
         });
         return res.status(StatusCodes.OK).json(Candidato);

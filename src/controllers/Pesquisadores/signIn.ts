@@ -58,9 +58,11 @@ export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) 
             }
         });
 
-        const token = jwt.sign({id: user.id_Pesquisador}, 'teste_Secret', {
+        const token = jwt.sign({id: user.id_Pesquisador}, "secret", {
             expiresIn: "2d"
         })
+
+        console.log('Token gerado:', token);
 
         return res.status(StatusCodes.OK).json({
             msg: "Logado com sucesso",

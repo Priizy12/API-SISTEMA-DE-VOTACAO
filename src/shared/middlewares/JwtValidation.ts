@@ -1,37 +1,35 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import * as jwt from 'jsonwebtoken';
+import { RequestHandler } from 'express'
+import { StatusCodes } from 'http-status-codes'
+import * as jwt from 'jsonwebtoken'
 
-interface Payload {
+
+interface TokenPayload {
     id: string;
     iat: number;
-    exp: number;
+    exp: number; 
 }
 
-export const AUTH: RequestHandler = async (req, res, next) => {
-    const { authorization } = req.headers;
+export const Validation: RequestHandler = (req, res, next) =>{
+    const { authorization } = req.headers
 
-    if (!authorization) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Não autenticado" });
-    }
+    if(!authorization) return res.status(StatusCodes.UNAUTHORIZED).json({default:{
+        error:{
+            msg:"Não autenticado"
+        }
+    }})
 
-    const [bearer, token] = authorization.split(' ');
+    const [, token] = authorization.split(' ')
 
-    if (bearer !== 'Bearer' || !token) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Formato de token inválido" });
-    }
+    if(!token) return res.status(StatusCodes.UNAUTHORIZED).json({default:{error:{msg: "Não autenticado"}}})
 
     try {
-        // Imprimir o token para fins de depuração
-        console.log('Token recebido:', token);
+        const data = jwt.verify(token, "secret")
+        const { id } = data as TokenPayload
+        req.userId = id
 
-        // Verificar o token usando a biblioteca JWT
-        const data =  jwt.verify(token, 'teste_Secret'); 
-        const { id } = data as Payload;
-        req.userId = id;
         return next();
-    } catch (error) {
-        console.error(error);
-        return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Token inválido" });
+     } catch (error) {
+        console.log(error)
+        return res.status(StatusCodes.UNAUTHORIZED).json({default:{error:{msg: "Token invalido"}}})
     }
-};
+}
