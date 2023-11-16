@@ -25,7 +25,7 @@ router.post('/Login', signInValidation, PesquisadorController.signIn)
 
 //Cadastro de Candidatos --> ( Administrador )
 router.post("/Candidatos" ,  upload.single("images"),  candidatoUpValidation, CandidatoController.create)
-router.get("/Candidatos", Validation,  CandidatoController.getAll)
+router.get("/Candidatos",  CandidatoController.getAll)
 router.get("/Candidatos/:id_candidato",  CandidatoController.getById)
 router.put("/Candidatos/:id_candidato",  candidatoValidation ,CandidatoController.uptdate)
 router.delete("/Candidatos/:id_candidato",  CandidatoController.deleteById)
