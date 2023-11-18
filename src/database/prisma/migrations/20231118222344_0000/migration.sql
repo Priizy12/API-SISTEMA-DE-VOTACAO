@@ -27,27 +27,11 @@ CREATE TABLE "Candidato" (
     "id_candidato" SERIAL NOT NULL,
     "name" VARCHAR(60) NOT NULL,
     "apelido" VARCHAR(60),
-    "estado_id" INTEGER NOT NULL,
-    "municipio_id" INTEGER NOT NULL,
+    "Partido" TEXT,
+    "cidade" TEXT NOT NULL,
+    "estado" TEXT NOT NULL,
 
     CONSTRAINT "Candidato_pkey" PRIMARY KEY ("id_candidato")
-);
-
--- CreateTable
-CREATE TABLE "municipio" (
-    "idMunicipio" SERIAL NOT NULL,
-    "Municipio" TEXT NOT NULL,
-
-    CONSTRAINT "municipio_pkey" PRIMARY KEY ("idMunicipio")
-);
-
--- CreateTable
-CREATE TABLE "Estado" (
-    "id_Estado" SERIAL NOT NULL,
-    "Estado" TEXT NOT NULL,
-    "uf" VARCHAR(2) NOT NULL,
-
-    CONSTRAINT "Estado_pkey" PRIMARY KEY ("id_Estado")
 );
 
 -- CreateTable
@@ -79,12 +63,6 @@ CREATE UNIQUE INDEX "Pesquisadores_cpf_key" ON "Pesquisadores"("cpf");
 
 -- AddForeignKey
 ALTER TABLE "Pesquisadores" ADD CONSTRAINT "Pesquisadores_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Candidato" ADD CONSTRAINT "Candidato_estado_id_fkey" FOREIGN KEY ("estado_id") REFERENCES "Estado"("id_Estado") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Candidato" ADD CONSTRAINT "Candidato_municipio_id_fkey" FOREIGN KEY ("municipio_id") REFERENCES "municipio"("idMunicipio") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Images" ADD CONSTRAINT "Images_FotoId_fkey" FOREIGN KEY ("FotoId") REFERENCES "Candidato"("id_candidato") ON DELETE RESTRICT ON UPDATE CASCADE;
