@@ -38,6 +38,8 @@ model Candidato {
    apelido String? @db.VarChar(60) 
    Partido String?
    cidade String
+   cargo String
+   Numero_do_partido Int 
    estado String
    images Images[] 
     votos Votos[]

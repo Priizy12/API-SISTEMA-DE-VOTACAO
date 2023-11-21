@@ -1,15 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { RequestHandler, Request, Response } from "express";
 import slug from 'slug'
-
 const prisma = new PrismaClient();
 
 interface votacao {
-  nome: string;
+  nome?: string;
   Idade: number;
   Localidade: string;
-  candidatoId: number;
+  candidatoId?: number;
 }
+
 
 
 export const create = async (req: Request<{}, {}, votacao>, res: Response) => {
@@ -29,7 +29,7 @@ export const create = async (req: Request<{}, {}, votacao>, res: Response) => {
 
     const votos = await prisma.votos.create({
       data: {
-        nome,
+        nome: String(nome),
         Idade: Number(Idade),
         Localidade: slug(Localidade),
         Votar: true,

@@ -34,7 +34,7 @@ router.delete("/Candidatos/:id_candidato",  CandidatoController.deleteById)
 
 
 //Pesquisador
-router.post("/Votar", VotacaoController.create)
+router.post("/Votar",VotacaoController.create)
 
 //Administrador
 router.get("/Resultado", VotacaoController.getAll)
