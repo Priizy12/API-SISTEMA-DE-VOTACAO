@@ -38,6 +38,7 @@ router.post("/Votar",VotacaoController.create)
 
 //Administrador
 router.get("/Resultado", VotacaoController.getAll)
+router.get("/Votos", VotacaoController.getAllPorEstado)
 
 
 

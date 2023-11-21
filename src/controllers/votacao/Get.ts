@@ -4,9 +4,9 @@ import { StatusCodes } from "http-status-codes";
 
 const prisma = new PrismaClient();
 
-export const getAll: RequestHandler = async (req, res) => {
+export const getAllPorEstado: RequestHandler = async (req, res) => {
     try {
-        const candidatosComContagemDeVotos = await prisma.candidato.findMany({
+        const candidatosComContagemDeVotosPorEstado = await prisma.candidato.findMany({
             include: {
                 votos: {
                     select: {
@@ -17,13 +17,10 @@ export const getAll: RequestHandler = async (req, res) => {
             }
         });
 
-        const resultado = candidatosComContagemDeVotos.map((candidato) => ({
-            id_candidato: candidato.id_candidato,
-            name: candidato.name,
-            estado: candidato.estado,
-            cidade: candidato.cidade,
-            partido: candidato.Partido,
-            Votos: candidato.votos.length,
+        const resultado = candidatosComContagemDeVotosPorEstado.map((estado) => ({
+            estado: estado.estado,
+            cidade: estado.cidade,
+            Votos: estado.votos.length
         }));
 
         return res.status(StatusCodes.OK).json(resultado);
