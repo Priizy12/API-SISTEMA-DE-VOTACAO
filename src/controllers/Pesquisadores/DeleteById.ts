@@ -18,7 +18,7 @@ export const deleteById = async (req: Request<{}, {}, {}>, res: Response) => {
 
         const NotExist = await prisma.pesquisadores.findUnique({
             where:{
-                id_Pesquisador
+                id_Pesquisador: Number(id_Pesquisador)
             }
         })
 

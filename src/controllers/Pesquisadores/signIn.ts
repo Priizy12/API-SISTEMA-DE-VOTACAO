@@ -62,11 +62,14 @@ export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) 
             expiresIn: "2d"
         })
 
-        console.log('Token gerado:', token);
+       
 
         return res.status(StatusCodes.OK).json({
             msg: "Logado com sucesso",
-            acessToken: token
+            acessToken: token,
+            name: user.name,
+            id: user.id_Pesquisador,
+            role: user.roleId
 
         })
 

@@ -38,7 +38,7 @@ export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) =
         if (!req.params) return res.status(StatusCodes.BAD_REQUEST).json({mensagem: "not req.params!"})
       
        
-        const Candidato = await prisma.pesquisadores.update({
+        const Pesquisador = await prisma.pesquisadores.update({
             where:{
                 id_Pesquisador: Number(id_Pesquisador)
             },
@@ -51,7 +51,7 @@ export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) =
             }
         });
 
-        if (!Candidato) {
+        if (!Pesquisador) {
             return res.status(StatusCodes.NOT_FOUND).json({ msg: "Esse Pesquisador não existe" });
         }
 

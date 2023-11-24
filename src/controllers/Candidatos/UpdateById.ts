@@ -19,7 +19,8 @@ export const candidatoValidation = validation((getSchema) => ({
         name: yup.string().required().max(60),
         apelido: yup.string().optional(),
         Partido: yup.string().optional(),
-        cep: yup.string().required().length(8)
+        estado: yup.string().required(),
+        cidade: yup.string().required()
     })),
     params: getSchema<IParamProps>(yup.object().shape({
         id_candidato: yup.number().required().min(1)
@@ -29,17 +30,22 @@ export const candidatoValidation = validation((getSchema) => ({
 export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) => {
 
     const { id_candidato } = req.params as IParamProps
-    const { name, apelido, Partido, cep } = req.body;
+    const { name, apelido, Partido, cidade, estado } = req.body;
     const requestImages = req.files as Express.Multer.File[];
     try {
 
         if (!req.params) return res.status(StatusCodes.BAD_REQUEST).json({mensagem: "not req.params!"})
       
-        const images = requestImages.map((image) =>{
-           return {
-              Url: image.filename
-           }
-        });
+        let images: any[] = [];
+        if (requestImages && Array.isArray(requestImages)) {
+            images = requestImages.map((image) => {
+                return {
+                    Url: image.filename,
+                };
+            });
+        }
+      
+
         const Candidato = await prisma.candidato.update({
             where:{
                 id_candidato: Number(id_candidato)
@@ -48,6 +54,8 @@ export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) =
                 name,
                 apelido,
                 Partido,
+                cidade,
+                estado,
                images:{
                 create: images
                }

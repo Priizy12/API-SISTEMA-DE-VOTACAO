@@ -38,8 +38,6 @@ model Candidato {
    apelido String? @db.VarChar(60) 
    Partido String?
    cidade String
-   cargo String
-   Numero_do_partido Int 
    estado String
    images Images[] 
     votos Votos[]
@@ -60,7 +58,7 @@ model Votos {
   Idade Int 
   Localidade String @db.VarChar(60)
   Votar Boolean
-  candidato   Candidato @relation(fields: [candidatoId], references: [id_candidato])
+  candidato   Candidato @relation(fields: [candidatoId], references: [id_candidato], onDelete: Cascade)
   candidatoId Int
 }
 
