@@ -21,7 +21,9 @@ export const PesquisadorValidation = validation((getSchema) => ({
         email: yup.string().required(),
         senha: yup.string().required().min(6).max(25),
         cpf: yup.string().required().min(11).max(11),
-        roleId: yup.number().optional()
+        roleId: yup.number().optional(),
+        cidade: yup.string().required(),
+        estado: yup.string().required()
     })),
     params: getSchema<IParamProps>(yup.object().shape({
         id_Pesquisador: yup.number().required().min(1)

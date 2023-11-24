@@ -4,6 +4,8 @@ export interface IPesquisador{
     email: string;
     cpf: string;
     roleId?: number;
-    senha: string
+    senha: string;
+    cidade: string;
+    estado: string
     
 }

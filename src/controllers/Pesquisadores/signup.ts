@@ -7,7 +7,8 @@ import { IPesquisador  } from "../../database/models";
 import { validation } from "../../shared/middlewares/Validation";
 const prisma = new PrismaClient();
 
-interface IBodyProps extends Omit<IPesquisador, "id_pesquisador" | "roleId"> {}
+interface IBodyProps extends Omit<IPesquisador, "id_pesquisador" | "roleId"> {
+}
 
 export const signUpValidation = validation((getSchema) => ({
 	body: getSchema<IBodyProps>(
@@ -16,12 +17,15 @@ export const signUpValidation = validation((getSchema) => ({
 			senha: yup.string().required().min(6),
 			email: yup.string().required().email().min(5),
 			cpf: yup.string().required().min(11).max(11),
+			estado: yup.string().required(),
+			cidade: yup.string().required()
+			
 		})
 	),
 }));
 
 export const signUp = async (req: Request<{}, {}, IPesquisador>, res: Response) => {
-	const { name, email, senha, cpf, roleId } = req.body;
+	const { name, email, senha, cpf, roleId, cidade, estado } = req.body;
 
 	const userExist = await prisma.pesquisadores.findUnique({ where: { email } });
 	if (userExist)
@@ -39,6 +43,8 @@ export const signUp = async (req: Request<{}, {}, IPesquisador>, res: Response) 
 				senha: hashPassword,
 				cpf,
 				roleId: userRole,
+				cidade,
+				estado
 			},
 		});
 

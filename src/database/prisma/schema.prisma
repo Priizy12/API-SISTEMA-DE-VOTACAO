@@ -17,10 +17,13 @@ model Pesquisadores {
   name    String @db.VarChar(60)
   cpf String @unique @db.VarChar(14)
   senha String @db.VarChar(60)
+  cidade String
+  estado String
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   Roles Role @relation(fields: [roleId], references: [id])
   roleId Int  
+  candidatos Candidato[]
 }
 
 model Role {
@@ -41,6 +44,7 @@ model Candidato {
    estado String
    images Images[] 
     votos Votos[]
+    pesquisadores Pesquisadores[] 
 }
 
 

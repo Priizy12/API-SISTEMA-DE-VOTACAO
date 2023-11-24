@@ -11,7 +11,7 @@ const prisma = new PrismaClient()
 
 
 
-interface IBodyProps extends Omit<IPesquisador, 'id_pesquisador' | 'name' | 'roleId' | 'cpf'> { }
+interface IBodyProps extends Omit<IPesquisador, 'id_pesquisador' | 'name' | 'roleId' | 'cpf' | 'cidade' | 'estado'> { }
 
 
 
@@ -37,6 +37,8 @@ export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) 
             createdAt: Date;
             updatedAt: Date;
             roleId: number;
+            cidade: string;
+            estado: string
         } | null = await prisma.pesquisadores.findFirst({ where: { email } });
 
 
@@ -69,7 +71,9 @@ export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) 
             acessToken: token,
             name: user.name,
             id: user.id_Pesquisador,
-            role: user.roleId
+            role: user.roleId,
+            cidade: user.cidade,
+            estado: user.estado
 
         })
 

@@ -5,6 +5,8 @@ CREATE TABLE "Pesquisadores" (
     "name" VARCHAR(60) NOT NULL,
     "cpf" VARCHAR(14) NOT NULL,
     "senha" VARCHAR(60) NOT NULL,
+    "cidade" TEXT NOT NULL,
+    "estado" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "roleId" INTEGER NOT NULL,
@@ -55,11 +57,23 @@ CREATE TABLE "Votos" (
     CONSTRAINT "Votos_pkey" PRIMARY KEY ("id_voto")
 );
 
+-- CreateTable
+CREATE TABLE "_CandidatoToPesquisadores" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Pesquisadores_email_key" ON "Pesquisadores"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Pesquisadores_cpf_key" ON "Pesquisadores"("cpf");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_CandidatoToPesquisadores_AB_unique" ON "_CandidatoToPesquisadores"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_CandidatoToPesquisadores_B_index" ON "_CandidatoToPesquisadores"("B");
 
 -- AddForeignKey
 ALTER TABLE "Pesquisadores" ADD CONSTRAINT "Pesquisadores_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -68,4 +82,10 @@ ALTER TABLE "Pesquisadores" ADD CONSTRAINT "Pesquisadores_roleId_fkey" FOREIGN K
 ALTER TABLE "Images" ADD CONSTRAINT "Images_FotoId_fkey" FOREIGN KEY ("FotoId") REFERENCES "Candidato"("id_candidato") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Votos" ADD CONSTRAINT "Votos_candidatoId_fkey" FOREIGN KEY ("candidatoId") REFERENCES "Candidato"("id_candidato") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Votos" ADD CONSTRAINT "Votos_candidatoId_fkey" FOREIGN KEY ("candidatoId") REFERENCES "Candidato"("id_candidato") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_CandidatoToPesquisadores" ADD CONSTRAINT "_CandidatoToPesquisadores_A_fkey" FOREIGN KEY ("A") REFERENCES "Candidato"("id_candidato") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_CandidatoToPesquisadores" ADD CONSTRAINT "_CandidatoToPesquisadores_B_fkey" FOREIGN KEY ("B") REFERENCES "Pesquisadores"("id_Pesquisador") ON DELETE CASCADE ON UPDATE CASCADE;
