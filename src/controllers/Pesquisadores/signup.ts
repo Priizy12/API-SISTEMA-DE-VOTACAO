@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import * as bcrypt from "bcryptjs";
 import * as yup from "yup";
 import { IPesquisador  } from "../../database/models";
-import { validation } from "../../shared/middlewares/Validation";
+import { validation } from "../../middlewares/Validation";
 const prisma = new PrismaClient();
 
 interface IBodyProps extends Omit<IPesquisador, "id_pesquisador" | "roleId"> {

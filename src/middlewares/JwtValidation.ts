@@ -6,7 +6,7 @@ import * as jwt from 'jsonwebtoken'
 interface TokenPayload {
     id: string;
     iat: number;
-    exp: number; 
+    exp: number;
 }
 
 export const Validation: RequestHandler = (req, res, next) =>{
@@ -23,7 +23,7 @@ export const Validation: RequestHandler = (req, res, next) =>{
     if(!token) return res.status(StatusCodes.UNAUTHORIZED).json({default:{error:{msg: "Não autenticado"}}})
 
     try {
-        const data = jwt.verify(token, "secret")
+        const data = jwt.verify(token, process.env.JWT) as any
         const { id } = data as TokenPayload
         req.userId = id
 

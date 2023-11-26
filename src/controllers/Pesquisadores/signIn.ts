@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken'
 import { IPesquisador } from "../../database/models";
-import { validation } from '../../shared/middlewares/Validation';
+import { validation } from '../../middlewares/Validation';
 import * as yup from 'yup'
 
 const prisma = new PrismaClient()
@@ -60,11 +60,16 @@ export const signIn = async (req: Request<{}, {}, IPesquisador>, res: Response) 
             }
         });
 
-        const token = jwt.sign({id: user.id_Pesquisador}, "secret", {
+        const token = jwt.sign({
+            id: user.id_Pesquisador,
+            role: user.roleId,
+            cidade: user.cidade,
+            estado: user.estado
+        }, process.env.JWT, {
             expiresIn: "2d"
         })
 
-       
+        console.log(token)
 
         return res.status(StatusCodes.OK).json({
             msg: "Logado com sucesso",

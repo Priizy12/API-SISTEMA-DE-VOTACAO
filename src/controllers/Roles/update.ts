@@ -3,7 +3,7 @@ import { IRole } from "../../database/models";
 import * as yup from 'yup'
 import { StatusCodes } from "http-status-codes";
 import { PrismaClient } from "@prisma/client";
-import { validation } from "../../shared/middlewares/Validation";
+import { validation } from "../../middlewares/Validation";
 const prisma = new PrismaClient();
 
 

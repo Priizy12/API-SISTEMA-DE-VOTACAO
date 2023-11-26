@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
-import { validation } from '../../shared/middlewares/Validation'
+import { validation } from '../../middlewares/Validation'
 import * as yup from 'yup'
 import { ICandidato } from "../../database/models/candidatos";
 const prisma = new PrismaClient();

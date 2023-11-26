@@ -13,7 +13,10 @@ export const getAll: RequestHandler = async (req, res) => {
                 id_Pesquisador: true,
                 name: true,
                 email:true,
-                cpf: true
+                cpf: true,
+                cidade: true,
+                estado: true,
+                senha: true
             }
         });
         return res.status(StatusCodes.OK).json(Pesquisadores);

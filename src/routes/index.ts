@@ -7,7 +7,7 @@ import { PesquisadorController } from '../controllers/Pesquisadores';
 import { signUpValidation } from '../controllers/Pesquisadores/signup';
 import { candidatoUpValidation } from '../controllers/Candidatos/create';
 import { candidatoValidation } from '../controllers/Candidatos/UpdateById';
-import { Validation } from '../shared/middlewares/JwtValidation';
+import { Validation} from '../middlewares/JwtValidation';
 import { VotacaoController } from '../controllers/votacao';
 import { RolesController } from '../controllers/Roles';
 import { PesquisadorValidation } from '../controllers/Pesquisadores/UpdateById';

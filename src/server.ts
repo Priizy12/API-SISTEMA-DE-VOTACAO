@@ -7,7 +7,7 @@ import '../src/shared/config/env'
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
-            JWT_SECRET: string;
+            JWT: string;
         }
     }
 }

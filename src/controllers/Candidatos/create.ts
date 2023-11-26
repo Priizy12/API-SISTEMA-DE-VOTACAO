@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { RequestHandler, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
-import { validation } from "../../shared/middlewares/Validation";
+import { validation } from "../../middlewares/Validation";
 import { ICandidato } from "../../database/models/candidatos";
 import axios from 'axios'
 const prisma = new PrismaClient();
