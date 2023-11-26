@@ -5,6 +5,7 @@ import { validation } from '../../middlewares/Validation'
 import * as yup from 'yup'
 import { ICandidato } from "../../database/models/candidatos";
 import { IPesquisador } from "../../database/models";
+import * as bcrypt from 'bcryptjs'
 const prisma = new PrismaClient();
 
 
@@ -39,7 +40,7 @@ export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) =
 
         if (!req.params) return res.status(StatusCodes.BAD_REQUEST).json({mensagem: "not req.params!"})
       
-       
+        const hashPassword = await bcrypt.hash(senha, 10);
         const Pesquisador = await prisma.pesquisadores.update({
             where:{
                 id_Pesquisador: Number(id_Pesquisador)
@@ -47,7 +48,7 @@ export const uptdate = async (req: Request<{}, {}, IBodyProps>, res: Response) =
             data:{
                 name,
                 email,
-                senha,
+                senha: hashPassword,
                 cpf,
                 roleId
             }
