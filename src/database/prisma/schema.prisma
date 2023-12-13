@@ -42,6 +42,7 @@ model Candidato {
    Partido String?
    cidade String
    estado String
+   Cargo String
    images Images[] 
     votos Votos[]
     pesquisadores Pesquisadores[] 
