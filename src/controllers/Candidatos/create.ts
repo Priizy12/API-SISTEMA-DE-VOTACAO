@@ -26,11 +26,11 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 	const requestImages = req.files as Express.Multer.File[];
 	try {
 		
-		const images = requestImages.map((image) => {
+	/*	const images = requestImages.map((image) => {
 			return {
 				Url: image.filename,
 			};
-		});
+		});*/
 
 		const candidato = await prisma.candidato.create({
 			data: {
@@ -38,10 +38,7 @@ export const create = async (req: Request<{}, {}, ICandidato>, res: Response) =>
 				apelido,
 				Partido,
 				cidade,
-				estado,
-				images: {
-					create: images
-				}
+				estado
 			}
 		});
 
